@@ -2,7 +2,7 @@
 using namespace std;
 
 class Student {
-    string name;
+    string name; // private member variable
 
     public:
         Student(string name);
