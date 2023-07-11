@@ -77,21 +77,20 @@ void StudentNode::Inorder(StudentNode *root)
 
 void StudentNode::traverseAndPrintNames(StudentNode *node, float &prevNumber)
 {
+    if (node)
     {
-        if (node)
+        traverseAndPrintNames(node->leftChild, prevNumber);
+
+        // if we encounter a unique shoe size, print it out
+        if (node->shoe_size != prevNumber)
         {
-            traverseAndPrintNames(node->leftChild, prevNumber);
-
-            if (node->shoe_size != prevNumber)
-            {
-                cout << endl << node->shoe_size << ": ";
-                prevNumber = node->shoe_size;
-            }
-
-            cout << node->name << ", ";
-
-            traverseAndPrintNames(node->rightChild, prevNumber);
+            cout << endl << node->shoe_size << ": ";
+            prevNumber = node->shoe_size; // store this number
         }
+
+        cout << node->name << ", "; // print out name
+
+        traverseAndPrintNames(node->rightChild, prevNumber);
     }
 }
 
