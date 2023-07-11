@@ -4,7 +4,8 @@ using namespace std;
 int main () {
     int rows, cols, sum = 0;
 
-    // declare a pointer to a pointer of type int (assign arr the memory address of a dynamically allocated array of int* pointers)
+    // declare a pointer to a pointer of type int 
+    // (assign arr the memory address of a dynamically allocated array of int* pointers)
     int** arr = new int*[rows]; 
 
     cout << "Enter number of rows: ";
@@ -12,12 +13,11 @@ int main () {
     cout << "Enter number of columns: ";
     cin >> cols;
 
-
     // Dynamically allocate memory for the 2D array
 
     // iterate over each element of the array arr, which represents the rows of the 2D array
     for (int i = 0; i < rows; i++) {
-        arr[i] = new int[cols]; // dynamically allocated an int array of size cols for each row 
+        arr[i] = new int[cols]; // dynamically allocate an int array of size cols
     }
 
     // Prompt the user to enter the elements of the array and keep a running total of the elements

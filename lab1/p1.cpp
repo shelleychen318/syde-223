@@ -1,23 +1,10 @@
 #include <iostream>
 using namespace std;
-#define MAX_SIZE 500 // maximum size of the string
 
 int main()
 {
-    // string input;
-    // int *p;
-    // p = new int();
-    // cout << "Enter input: ";
-    // cin >> input;
-    // *p = input.size();
-    // cout << *p;
-
-    // delete p;
-    // p = NULL;
-
-
-    char text[MAX_SIZE];
-    char * str = text; // points to the first character of the array
+    char text[500]; // declare char array of size 500
+    char *str = text; // points to first char of array
     int count = 0;
 
     cout << "Enter input: ";
@@ -29,6 +16,6 @@ int main()
 
     cout << count;
 
-    // delete str;
-    // str = NULL;
+    delete str;
+    str = nullptr;
 }

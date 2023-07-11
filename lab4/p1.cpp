@@ -1,7 +1,8 @@
 #include<iostream>
 using namespace std;
 
-// function that takes a natural number n and print all binary string of length n in ascending order
+// function that takes an integer n and prints all binary
+// strings of length n in ascending order
 void printNBinary(int n, string str="") {
     // base case: we are at last character of binary string
     if (n == 0) {

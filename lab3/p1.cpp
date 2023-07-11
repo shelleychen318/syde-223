@@ -91,28 +91,24 @@ public:
 int main() {
     LinkedList myList;
 
-    // Add nodes with data values 2, 4, 6, 8, 10
     myList.addNode(10);
     myList.addNode(8);
     myList.addNode(6);
     myList.addNode(4);
     myList.addNode(2);
 
-    std::cout << "Linked list: ";
-    myList.printList();
+    myList.printList(); // 2 4 6 8 10
 
     // Insert a node after data value 6
     myList.insertAfter(6, 7);
-    std::cout << "After inserting 7 after 6: ";
-    myList.printList();
+    myList.printList(); // 2 4 6 7 8 10 
 
     // Delete node with data value 8
     myList.deleteNode(8);
-    std::cout << "After deleting node with data 8: ";
-    myList.printList();
+    myList.printList(); // 2 4 6 7 10 
 
-    // Delete node with data value 5 (which doesn't exist)
-    myList.deleteNode(5);
+    // Delete node with data value 5 
+    myList.deleteNode(5); // not found
 
     return 0;
 }
