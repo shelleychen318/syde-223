@@ -29,6 +29,9 @@ public:
     void Inorder(StudentNode *root);
     void traverseAndPrintNames(StudentNode *node, float &prevNumber);
     void printNamesWithSameNumber(StudentNode *root);
+    StudentNode *removeDuplicates(StudentNode *root);
+    void deleteSubtree(StudentNode *node);
+    // void deleteTree(StudentNode *root);
 };
 
 StudentNode::StudentNode() : name(""), shoe_size(0), leftChild(NULL), rightChild(NULL) {}
@@ -45,18 +48,18 @@ StudentNode *StudentNode::Insert(StudentNode *root, string name, float shoe_size
     // Insert data.
     if (shoe_size >= root->shoe_size)
     {
-        // Insert right node data, if the 'value'
+        // Insert rightCChild node data, if the 'value'
         // to be inserted is greater than 'root' node data.
 
-        // Process right nodes.
+        // Process rightCChild nodes.
         root->rightChild = Insert(root->rightChild, name, shoe_size);
     }
     else if (shoe_size < root->shoe_size)
     {
-        // Insert left node data, if the 'value'
+        // Insert leftChild node data, if the 'value'
         // to be inserted is smaller than 'root' node data.
 
-        // Process left nodes.
+        // Process leftChild nodes.
         root->leftChild = Insert(root->leftChild, name, shoe_size);
     }
 
@@ -101,41 +104,86 @@ void StudentNode::printNamesWithSameNumber(StudentNode *root)
     cout << endl;
 }
 
-int main()
+StudentNode *StudentNode::removeDuplicates(StudentNode *root)
 {
-    in.open("shoe_sizes.txt"); // opening up the shoe size text file
+    if (root == nullptr)
+        return nullptr;
 
-    if (in.fail()) // if the file fails to open
+    root->leftChild = removeDuplicates(root->leftChild);
+    root->rightChild = removeDuplicates(root->rightChild);
+
+    if (root->leftChild != nullptr && root->shoe_size == root->leftChild->shoe_size)
     {
-        cout << "Input file opening failed\n";
-        exit(1);
+        StudentNode *temp = root->leftChild;
+        root->leftChild = nullptr;
+        deleteSubtree(temp);
     }
 
-    StudentNode tree, *root = NULL;
-    Student shoe_sizes[20];
-    string name;
-    string shoe_size;
-
-    for (int i = 0; i < 20; i++)
+    if (root->rightChild != nullptr && root->shoe_size == root->rightChild->shoe_size)
     {
-        in >> name >> shoe_size;
-        shoe_sizes[i].name = name;
-        shoe_sizes[i].shoe_size = stof(shoe_size);
-
-        if (i == 0)
-        {
-            root = tree.Insert(root, shoe_sizes[i].name, shoe_sizes[i].shoe_size);
-        }
-        else
-        {
-            tree.Insert(root, shoe_sizes[i].name, shoe_sizes[i].shoe_size);
-        }
+        StudentNode *temp = root->rightChild;
+        root->rightChild = nullptr;
+        deleteSubtree(temp);
     }
 
-    // tree.Inorder(root);
-    tree.printNamesWithSameNumber(root);
-
-    in.close(); // close the input stream
-
-    return 0;
+    return root;
 }
+
+void StudentNode::deleteSubtree(StudentNode *node)
+{
+    if (node == nullptr)
+        return;
+
+    deleteSubtree(node->leftChild);
+    deleteSubtree(node->rightChild);
+    delete node;
+
+}
+
+    int main()
+    {
+        in.open("shoe_sizes.txt"); // opening up the shoe size text file
+
+        if (in.fail()) // if the file fails to open
+        {
+            cout << "Input file opening failed\n";
+            exit(1);
+        }
+
+        StudentNode tree, *root = NULL;
+        Student shoe_sizes[20];
+        string name;
+        string shoe_size;
+
+        for (int i = 0; i < 20; i++)
+        {
+            in >> name >> shoe_size;
+            shoe_sizes[i].name = name;
+            shoe_sizes[i].shoe_size = stof(shoe_size);
+
+            if (i == 0)
+            {
+                root = tree.Insert(root, shoe_sizes[i].name, shoe_sizes[i].shoe_size);
+            }
+            else
+            {
+                tree.Insert(root, shoe_sizes[i].name, shoe_sizes[i].shoe_size);
+            }
+        }
+
+        tree.Inorder(root);
+
+        root = tree.removeDuplicates(root);
+
+        cout << endl
+             << "After Removing Duplicates: " << endl;
+        tree.Inorder(root);
+        cout << endl;
+
+        // Delete the binary tree
+        // tree.deleteTree(root);
+
+        in.close(); // close the input stream
+
+        return 0;
+    }
